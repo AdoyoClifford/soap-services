@@ -1,5 +1,7 @@
 package com.adoyo.soap_web_services;
 
+import com.adoyo.soap_web_services.bean.Course;
+import com.adoyo.soap_web_services.soap.CourseDetailsService;
 import com.in28minutes.courses.CourseDetails;
 import com.in28minutes.courses.GetCourseDetailRequest;
 import com.in28minutes.courses.GetCourseDetailResponse;
@@ -13,17 +15,23 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 public class CourseDetailEndPoint {
 
     @Autowired
-
+    CourseDetailsService service;
 
     @PayloadRoot(namespace = "http://in28minutes.com/courses",localPart = "GetCourseDetailRequest")
     @ResponsePayload
     public GetCourseDetailResponse processCourseDetailsResponse(@RequestPayload GetCourseDetailRequest request) {
-        GetCourseDetailResponse response = new GetCourseDetailResponse();
+        Course course = service.findCourseById(request.getId());
 
+
+        return mapCourse(course);
+    }
+
+    private static GetCourseDetailResponse mapCourse(Course course) {
+        GetCourseDetailResponse response = new GetCourseDetailResponse();
         CourseDetails courseDetails = new CourseDetails();
-        courseDetails.setId(request.getId());
-        courseDetails.setName("Microservices Course");
-        courseDetails.setDescription("That would be a wonderful course!");
+        courseDetails.setId(course.getId());
+        courseDetails.setName(course.getName());
+        courseDetails.setDescription(course.getDescription());
 
         response.setCourseDetails(courseDetails);
 

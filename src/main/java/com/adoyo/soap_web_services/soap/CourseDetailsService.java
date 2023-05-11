@@ -1,11 +1,13 @@
 package com.adoyo.soap_web_services.soap;
 
 import com.adoyo.soap_web_services.bean.Course;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Component
 public class CourseDetailsService {
 
     private static List<Course> courses = new ArrayList<>();
