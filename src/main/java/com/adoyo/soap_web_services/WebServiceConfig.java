@@ -15,11 +15,11 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class WebServiceConfig {
     @Bean
-    public ServletRegistrationBean messageDispatcherServlet(ApplicationContext context) {
+    public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext context) {
         MessageDispatcherServlet messageDispatcherServlet = new MessageDispatcherServlet();
         messageDispatcherServlet.setApplicationContext(context);
         messageDispatcherServlet.setTransformWsdlLocations(true);
-        return new ServletRegistrationBean(messageDispatcherServlet,"/ws/*");
+        return new ServletRegistrationBean<>(messageDispatcherServlet,"/ws/*");
     }
 
     @Bean(name = "courses")
@@ -27,7 +27,7 @@ public class WebServiceConfig {
         DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
         definition.setPortTypeName("CoursePort");
         definition.setTargetNamespace("http://in28minutes.com/courses");
-        definition.setLocationUri("/ws");
+        definition.setLocationUri("/ws/");
         definition.setSchema(courseSchema);
         return definition;
     }

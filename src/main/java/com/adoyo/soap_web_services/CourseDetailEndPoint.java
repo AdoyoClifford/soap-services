@@ -13,12 +13,16 @@ public class CourseDetailEndPoint {
 
     @PayloadRoot(namespace = "http://in28minutes.com/courses",localPart = "GetCourseDetailRequest")
     @ResponsePayload
-    public GetCourseDetailResponse processCourseDetailsResponse(@RequestPayload GetCourseDetailRequest courseDetailRequest) {
+    public GetCourseDetailResponse processCourseDetailsResponse(@RequestPayload GetCourseDetailRequest request) {
         GetCourseDetailResponse response = new GetCourseDetailResponse();
+
         CourseDetails courseDetails = new CourseDetails();
-        courseDetails.setId(courseDetailRequest.getId());
-        courseDetails.setName("Microservces");
-        courseDetails.setDescription("That is a wonderful course");
+        courseDetails.setId(request.getId());
+        courseDetails.setName("Microservices Course");
+        courseDetails.setDescription("That would be a wonderful course!");
+
+        response.setCourseDetails(courseDetails);
+
         return response;
     }
 }
